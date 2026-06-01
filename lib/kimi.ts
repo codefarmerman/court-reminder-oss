@@ -1,11 +1,6 @@
 import OpenAI from "openai";
 import { CourtSummons, validateSummons } from "./types";
 
-const client = new OpenAI({
-  apiKey: process.env.MOONSHOT_API_KEY,
-  baseURL: "https://api.moonshot.cn/v1",
-});
-
 const ALLOWED_MIME_TYPES = new Set([
   "image/jpeg", "image/png", "image/webp", "image/heic",
 ]);
@@ -23,6 +18,16 @@ export async function parseSummons(
   if (!ALLOWED_MIME_TYPES.has(mimeType)) {
     throw new Error("不支持的文件类型，请上传图片");
   }
+
+  const apiKey = process.env.MOONSHOT_API_KEY;
+  if (!apiKey) {
+    throw new Error("缺少 MOONSHOT_API_KEY 环境变量");
+  }
+
+  const client = new OpenAI({
+    apiKey,
+    baseURL: "https://api.moonshot.cn/v1",
+  });
 
   const messages: OpenAI.ChatCompletionMessageParam[] = [
     { role: "system", content: SYSTEM_PROMPT },
