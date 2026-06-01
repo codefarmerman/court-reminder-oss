@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Force light color scheme: prevents iOS dark mode from auto-dimming form inputs */
+:root {
+  color-scheme: light;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+html {
+  color-scheme: light only;
+  font-size: 16px;
+}
+
+body {
+  background: #f9fafb;
+  color: #0f172a;
+  /* -apple-system first for iOS, Hiragino Sans GB is iOS native Chinese font */
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* tnum = tabular numbers: align case numbers, phone numbers, dates */
+  font-feature-settings: "tnum" 1, "kern" 1;
+  line-height: 1.6;
+  /* Prevent iOS rubber-band overscroll */
+  overscroll-behavior-y: none;
+  min-height: 100dvh;
+}
+
+/* Ensure inputs are always readable regardless of OS dark mode.
+   CRITICAL: font-size MUST be >= 16px to prevent iOS Safari from
+   auto-zooming the viewport on input focus. */
+input,
+textarea,
+select {
+  color: #0f172a;
+  background-color: #ffffff;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+/* Remove 300ms tap delay and grey tap highlight on all buttons/links */
+button,
+a,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Native datetime-local input polish on iOS */
+input[type="datetime-local"] {
+  min-height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Consistent focus ring for accessibility */
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid #1e3a5f;
+  outline-offset: 2px;
+}
